@@ -39,7 +39,7 @@ describe('HTML', () => {
 
     it('Соответствие количества элементов списка', async () => {
         const listData = await page.evaluate(() => [
-            document.querySelectorAll('ul')?.length,
+            document.querySelectorAll('ol')?.length,
             document.querySelectorAll('li')?.length,
         ]);
 
