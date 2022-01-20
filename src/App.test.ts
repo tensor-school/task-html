@@ -29,12 +29,28 @@ describe('HTML', () => {
         expect(h1Count).toBe(1);
     });
 
+    it('Заголовок первого уровня содержит текст', async () => {
+        const textLength = await page.evaluate(
+            () => document.querySelectorAll('h1')[0]?.textContent?.length
+        );
+
+        expect(textLength).toBeGreaterThan(1);
+    });
+
     it('Соответствие количества заголовков второго уровня', async () => {
         const h2Count = await page.evaluate(
             () => document.querySelectorAll('h2')?.length,
         );
 
         expect(h2Count).toBe(1);
+    });
+
+    it('Заголовок второго уровня содержит текст', async () => {
+        const textLength = await page.evaluate(
+            () => document.querySelectorAll('h2')[0]?.textContent?.length
+        );
+
+        expect(textLength).toBeGreaterThan(1);
     });
 
     it('Соответствие количества элементов списка', async () => {
@@ -63,5 +79,17 @@ describe('HTML', () => {
         );
 
         expect(linksData.every(Boolean)).toBe(true);
+    });
+
+    it('Все ссылки содержат текст', async () => {
+        const linksData = await page.evaluate(() =>
+            Array.from(document.querySelectorAll('li > a')).map(
+                (item) => item.textContent?.length,
+            ),
+        );
+
+        linksData.forEach((textLength) => {
+            expect(textLength).toBeGreaterThan(0);
+        });
     });
 });
